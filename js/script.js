@@ -54,60 +54,6 @@ next.onclick = () => {
 }
 
 
-// let genderBtns = document.querySelectorAll('#gender .calculating__choose-item')
-// let inputs = document.querySelectorAll('.calculating__choose_medium input')
-// let allActBtns = document.querySelectorAll('.calculating__choose_big .calculating__choose-item')
-// let resultNum = document.querySelector('#result')
-
-// let userData = {
-//     gender: 'woman'
-// }
-
-// genderBtns.forEach(btn => {
-//     btn.onclick = () => {
-//         genderBtns.forEach(el => el.classList.remove('calculating__choose-item_active'))
-
-//         btn.classList.add('calculating__choose-item_active')
-
-//         userData.gender = btn.getAttribute('data-gender')
-//     }
-// });
-
-// inputs.forEach(input => {
-//     input.oninput = () => {
-//         userData[input.id] = +input.value 
-//     }
-// })
-
-
-// allActBtns.forEach(btn => {
-//     btn.onclick = () => {
-//         inputs.forEach(input => {
-//             if(input.length <= 0){
-
-//             }
-//         })
-//         allActBtns.forEach(el => el.classList.remove('calculating__choose-item_active'))
-
-//         btn.classList.add('calculating__choose-item_active')
-
-//         let {age, weight, height, gender} = userData
-
-//         let result = (10 * weight) + (6.25 * height) - (5 * age)
-
-//         let activeNum = +btn.getAttribute('data-act') 
-
-//         if(gender === 'man') {
-//             resultNum.innerHTML = Math.round((result + 5) * activeNum)
-//         } else {
-//             resultNum.innerHTML = Math.round((result - 161) * activeNum)
-//         }
-
-//     }
-// })
-
-
-
 let genderBtns = document.querySelectorAll('#gender .calculating__choose-item')
 let inputs = document.querySelectorAll('.calculating__choose_medium input')
 let allActBtns = document.querySelectorAll('.calculating__choose_big .calculating__choose-item')
@@ -132,7 +78,6 @@ inputs.forEach(input => {
         userData[input.id] = +input.value 
     }
 })
-
 
 allActBtns.forEach(btn => {
     btn.onclick = () => {
@@ -176,7 +121,42 @@ allActBtns.forEach(btn => {
     }
 })
 
+const deadLine = '2023-05-20 00:00'
 
-// BMR = 88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)
+function getTime(endTime) {
+    const t = Date.parse(endTime) - Date.parse(new Date()),
+     days = Math.round((t / 1000) / 60 / 60 / 24),
+     hours = Math.round((t / 1000) / 60 / 60 % 24),
+     minutes = Math.round((t / 1000) / 60 % 60 ),
+     seconds = Math.round((t / 1000) % 60)
 
-// BMRW = 447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)
+
+    return {
+        t,
+        days,
+        hours,
+        minutes,
+        seconds
+    }
+}
+
+function showTime(endTime, selector) {
+    const timer = document.querySelector(selector),
+               days = timer.querySelector('#days'),
+               hours = timer.querySelector('#hours'),
+               minutes = timer.querySelector('#minutes'),
+               seconds = timer.querySelector('#seconds')
+               interval = setInterval(setTime , 1000)
+
+               function setTime() {
+                const t = getTime(endTime)
+                days.innerHTML = t.days
+                hours.innerHTML  = t.hours
+                minutes.innerHTML = t.minutes
+                seconds.innerHTML = t.seconds
+               }
+
+}
+
+showTime(deadLine, '.timer')
+console.log(getTime(deadLine)); 
